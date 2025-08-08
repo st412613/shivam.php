@@ -1,0 +1,12 @@
+{   "scripts": {
+    "start": "php -S localhost:8001 -t public/"
+},
+    "autoload": {
+    "psr-4": {
+        "Shivam\\": "src/"
+    }
+},
+    "require": {
+        "twig/twig": "^3.21"
+    }
+}

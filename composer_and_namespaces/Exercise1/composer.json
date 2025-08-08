@@ -1,0 +1,14 @@
+{
+    "name": "shivam/vendor",
+    "description": "this is testing",
+    "type": "project",
+    "scripts": {
+        "hello": "echo Hello shivam"
+    },
+    "autoload": {
+        "psr-4": {
+            "Shivam\\Vendor\\": "src/"
+        }
+    },
+    "require": {}
+}

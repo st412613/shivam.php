@@ -1,0 +1,22 @@
+{
+    "name": "shivam/vendor",
+    "description": "This is testing for autoload",
+    "type": "project",
+    "scripts": {
+        "run": "php public/index.php"
+    },
+    "autoload": {
+        "psr-4": {
+            "Shiva\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Shivam",
+            "email": "st412613@gmail.com"
+        }
+    ],
+    "require": {
+        "mattsmithdev/faker-small-english": "^0.1.0"
+    }
+}
