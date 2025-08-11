@@ -1,0 +1,16 @@
+{% extends 'base​.html​.twig' %}
+{% block pageTitle %}Product List{% endblock %}
+{% block productsLink %}active{% endblock %}
+{% block main %}
+<p>
+ Here is a list of our products.
+</p>
+<dl class="container bg-light">
+ {% for product in products %}
+<dt>{{ product.name }}</dt>
+<dd> $ {{ product.price | number_format(2) }}</dd>
+{% else %}
+<dt>(sorry, there are no products to list)</dt>
+{% endfor %}
+</dl>
+{% endblock %}

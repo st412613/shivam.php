@@ -1,0 +1,13 @@
+{
+    "name": "shivam/exceptionhandling",
+    "description": "This is testing in exception",
+    "scripts": {
+        "start":"php public/index.php"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "require": {}
+}
