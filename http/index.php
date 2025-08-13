@@ -1,17 +1,18 @@
 <?php
-header("Content-Type: application/json");
-// header("Connection: keep-alive");
-$server = $_SERVER['REQUEST_METHOD'];
-if($server == 'GET'){
-    $data = ['shivam' => 'raja'];
-    echo json_encode($data);
-    echo json_encode($_GET);
-}
-if($server == 'POST'){
-    echo "WOW POST";
-    echo json_encode($_SERVER);
-
-echo json_encode(file_get_contents("php://input"));
-
-}
-// print $server;
+// Set content type
+header("Content-Type: text/html");
+?>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>PHP CSS Cache Example</title>
+    
+    <!-- Link CSS file -->
+    <link rel="stylesheet" href="style.php?v=1.0"> <!-- `v=1.0` is cache-busting query (optional) -->
+</head>
+<body>
+    <h1>Hello Shivam Bhai 👋</h1>
+    <p>This is a PHP page with external CSS.</p>
+</body>
+</html>
