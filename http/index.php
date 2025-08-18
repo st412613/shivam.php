@@ -1,7 +1,7 @@
 <?php
 // Tell browser to send client hints in future requests
-header("Accept-CH: DPR, Viewport-Width, Device-Memory");
-header("Vary: Viewport-Width"); // 🔁 Ensure correct caching per viewport
+// header("Accept-CH: DPR, Viewport-Width, Device-Memory");
+// header("Vary: Viewport-Width"); // 🔁 Ensure correct caching per viewport
 
 // Set cookie if not already set
 if (!isset($_COOKIE["username"])) {

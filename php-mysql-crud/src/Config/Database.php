@@ -7,7 +7,7 @@ use Exception;
 
 class Database {
     private static ?Database $instance = null;
-    private mysqli $conn;
+    private mysqli $connection;
 
     private $hos;
     private $username;
