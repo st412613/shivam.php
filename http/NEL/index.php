@@ -1,4 +1,19 @@
 <?php
+// 🔒 Content Security Policy + NEL headers
+header("Content-Security-Policy: 
+    default-src 'self'; 
+    script-src 'self'; 
+    connect-src 'self'; 
+    media-src 'self'; 
+    frame-src https://getbootstrap.com; 
+    object-src 'none';
+    base-uri 'self';
+    form-action 'self';
+");
+
+header("Report-To: {\"group\":\"network-errors\",\"max_age\":10886400,\"endpoints\":[{\"url\":\"http://localhost/nel-endpoint.php\"}]}");
+header("NEL: {\"report_to\":\"network-errors\",\"max_age\":10886400,\"include_subdomains\":true}");
+
 $file = 'video.mp4';
 
 if (isset($_GET['action']) && $_GET['action'] === 'download') {
@@ -12,7 +27,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'download') {
     $end = $size - 1;
 
     // Max chunk size 500 KB
-    $max_chunk = 200000; // bytes
+    $max_chunk = 200;
 
     if (isset($_SERVER['HTTP_RANGE'])) {
         if (preg_match('/bytes=(\d*)-(\d*)/', $_SERVER['HTTP_RANGE'], $matches)) {
@@ -25,12 +40,10 @@ if (isset($_GET['action']) && $_GET['action'] === 'download') {
         }
     }
 
-    // Adjust end to limit chunk size to max_chunk bytes
     if (($end - $start + 1) > $max_chunk) {
         $end = $start + $max_chunk - 1;
     }
 
-    // Make sure end doesn't exceed file size
     if ($end >= $size) {
         $end = $size - 1;
     }
@@ -54,11 +67,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'download') {
     fseek($fp, $start);
 
     while (!feof($fp) && ($pos = ftell($fp)) <= $end) {
-        if ($pos + 8192 > $end) {
-            $buffer = $end - $pos + 1;
-        } else {
-            $buffer = 8192;
-        }
+        $buffer = ($pos + 8192 > $end) ? ($end - $pos + 1) : 8192;
         echo fread($fp, $buffer);
         flush();
     }
@@ -71,46 +80,42 @@ if (isset($_GET['action']) && $_GET['action'] === 'download') {
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<title>Range Request with 500KB Chunk Limit</title>
+    <meta charset="UTF-8" />
+    <title>PHP NEL + Range Request</title>
 </head>
 <body>
 
-<h1>Range Request with Max 500KB Chunk</h1>
+<h1>🎥 Range Streaming with NEL (500KB Chunk)</h1>
 
-<h2>Video Streaming (auto range request)</h2>
 <video width="600" controls src="?action=download"></video>
 
-<h2>JavaScript fetch() with Range Header</h2>
-<button id="fetchRange">Fetch bytes 0-9999999 (but server limits 500KB)</button>
+<h2>📦 Fetch Chunk (0–9999999 bytes)</h2>
+<button id="fetchRange">Fetch with Range Header</button>
 <pre id="output"></pre>
 
 <script>
-
-
 document.getElementById('fetchRange').addEventListener('click', () => {
     fetch('?action=download', {
         headers: {
-            'Range': 'bytes=0-9999999' // big range, server limits to 500KB
+            'Range': 'bytes=0-9999999'
         }
     })
     .then(response => {
         if (response.status === 206) {
             return response.arrayBuffer();
         } else {
-            throw new Error('Range request not supported or failed');
+            throw new Error('Range request failed');
         }
     })
     .then(buffer => {
         document.getElementById('output').textContent = 
-            `Received ${buffer.byteLength} bytes (max 500KB chunk).`;
+            `✔️ Received ${buffer.byteLength} bytes (chunk).`;
     })
     .catch(err => {
-        document.getElementById('output').textContent = 'Error: ' + err.message;
+        document.getElementById('output').textContent = '❌ Error: ' + err.message;
     });
 });
 </script>
 
-<iframe src="https://getbootstrap.com/docs/3.3/components/" frameborder="1000"></iframe>
 </body>
 </html>

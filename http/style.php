@@ -1,6 +1,7 @@
 <?php
 // CSS header
 header("Content-Type: text/css");
+header("Cache-Control: public, max-age=3600");
 
 // Cache this CSS for 1 hour (3600 seconds)
 header("Set-Cookie: id=a3fWa; Expires=Thu, 21 Oct 2021 07:28:00 GMT; Secure; HttpOnly");
